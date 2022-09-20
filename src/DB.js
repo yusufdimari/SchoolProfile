@@ -1,3 +1,34 @@
+// `useEffect(() => {
+//   db.forEach((school) => {
+//     firebase
+//       .firestore()
+//       .collection("Schools")
+//       .add({
+//         type: "Feature",
+//         properties: {
+//           FID: school.properties.FID,
+//           no_of_stud: school.properties.no_of_stud,
+//           no_of_teac: school.properties.no_of_teac,
+//           poi_type: school.properties.poi_type,
+//           education: school.properties.education,
+//           management: school.properties.management,
+//           subtype: school.properties.subtype,
+//           category: school.properties.category,
+//           name: school.properties.name,
+//           source: school.properties.source,
+//           wardcode: school.properties.wardcode,
+//           ward_name: school.properties.ward_name,
+//           lga_code: school.properties.lga_code,
+//           lga_name: school.properties.lga_name,
+//           state_code: school.properties.state_code,
+//         },
+//         geometry: {
+//           type: school.geometry.type,
+//           coordinates: school.geometry.coordinates,
+//         },
+//       });
+//   });
+// }, []);`;
 export default {
   schools: [
     {

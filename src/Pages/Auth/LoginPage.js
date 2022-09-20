@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Field, Formik, ErrorMessage } from "formik";
 import { FaApple, FaFacebookF, FaGoogle } from "react-icons/fa";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useAppContext } from "../../components/Auth/AppProvider";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import * as Yup from "yup";
 import "../../css/loginpage.css";
 import { useAuth } from "../../components/Auth/use-auth";
@@ -69,9 +68,9 @@ export default function LoginPage() {
             >
               Login
             </button>
-            <a href={"../SchoolProfile/SignUp"} className="sign-up">
+            <Link to={"../SchoolProfile/signup"} className="sign-up">
               Don't have an account? Sign up
-            </a>
+            </Link>
             <p className="alternative-sign-in">or login with</p>
             <div className="horizontalrule" />
             <div className="bottom">

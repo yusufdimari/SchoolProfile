@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SchoolCard from "../components/SchoolCard";
 import "../css/home.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useAuth } from "../components/Auth/use-auth";
+import DB from "../DB";
+import firebase from "../Firebase/firebase";
+const db = DB.Abuja;
+
 export default function Home() {
   const auth = useAuth();
   const settings = {

@@ -76,7 +76,7 @@ export default function Navbar() {
 
           <li className="nav_item" id="contact">
             <Link
-              to="./SchoolProfile/contact"
+              to="./SchoolProfile/map"
               className="nav_link"
               onClick={navToggle}
             >

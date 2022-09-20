@@ -28,7 +28,7 @@ export default function SignUpScreen() {
       multiple: false,
       limitFilesConfig: { max: 2 },
       // minFileSize: 1,
-      maxFileSize: 2, // in megabytes
+      maxFileSize: 5, // in megabytes
       // imageSizeRestrictions: {
       //   maxHeight: 2400, // in pixels
       //   maxWidth: 2400,

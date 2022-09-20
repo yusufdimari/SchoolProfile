@@ -6,6 +6,7 @@ import Messages from "../components/Messages";
 import Profile from "../components/Profile";
 import firebase from "../Firebase/firebase";
 import { useAuth } from "../components/Auth/use-auth";
+import Users from "../components/Users";
 
 export default function ProfileScreen() {
   const [activeMessage, setActiveMessage] = useState(null);
@@ -122,6 +123,7 @@ export default function ProfileScreen() {
         messages={messages}
         setActiveMessage={setActiveMessage}
       />
+      <Users active={active} />
       <Profile active={active} data={data} />
     </div>
   );

@@ -165,7 +165,7 @@
     background-color: rgba(11, 153, 209, 0.987);
 }
 
-@media(min-width:574px){
+@media(min-width:1023px){
     .profile{
         width:70%;
     }

@@ -21,7 +21,11 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/SchoolProfile/login" element={<LoginPage />}></Route>
-            <Route path="/SchoolProfile/login" element={<LoginPage />}></Route>
+            {/* <Route path="/SchoolProfile/map" element={<Map />}></Route> */}
+            <Route
+              path="/SchoolProfile/signup"
+              element={<SignUpScreen />}
+            ></Route>
             <Route path="/SchoolProfile/" element={<Home />}></Route>
             <Route path="/SchoolProfile/home" element={<Home />}></Route>
             <Route
@@ -39,10 +43,6 @@ function App() {
                   <Schools />
                 </ProtectedRoute>
               }
-            ></Route>
-            <Route
-              path="/SchoolProfile/SignUp"
-              element={<SignUpScreen />}
             ></Route>
             <Route path="/SchoolProfile/*" element={<ErrorPage />}></Route>
             <Route path="/SchoolProfile/instagram" element={<ExternalPage />} />
