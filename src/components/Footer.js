@@ -1,5 +1,5 @@
 import React from "react";
-import "../footer.css";
+import "../css/footer.css";
 import {
   FaLinkedinIn,
   FaInstagram,
@@ -8,6 +8,7 @@ import {
   FaFacebook,
   FaFacebookF,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function footer() {
   return (
@@ -74,9 +75,13 @@ export default function footer() {
                 <a href="www.linkedin.com/SchoolProfile" target={"_blank"}>
                   <FaLinkedinIn />
                 </a>
-                <a href="www.instagram.com/SchoolProfile" target={"_blank"}>
+                <Link
+                  to={"./instagram"}
+                  target="_blank"
+                  state={{ link: "www.instagram.com" }}
+                >
                   <FaInstagram />
-                </a>
+                </Link>
                 <a href="mailto:SchoolProfile@gmail.com?subject=Mail from our Website ">
                   <FaPaperPlane />
                 </a>

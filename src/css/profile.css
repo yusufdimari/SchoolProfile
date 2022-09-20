@@ -1,0 +1,288 @@
+.profile{
+    background-color: white;
+    width:90%;
+    border-radius: 10px;
+    display: block;
+}
+.top_underline{
+    /* margin-bottom: 20px; */
+    content: '';
+    height: 2px;
+    width: 100%;
+    background-color: rgb(179, 176, 176);
+    border-radius: 2px;
+}
+.bottom{
+    display: flex;
+    margin: 0 20px 20px 20px;
+}
+.profile .left{
+    width: 40%;
+    display: flex;
+    flex-direction:column;
+    margin-right: 20px;
+}
+.left .profile_pic{
+    width:100%;
+    align-self:flex-end;
+}
+.left .container_header{
+    display: flex;
+    margin:20px 0
+
+}
+ .container_title{
+    color:gray;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.left .work_place{
+    font-weight: 700;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.left .work_address{
+    font-size: 10px;
+    color: gray;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+ .left .underline{
+    content: '';
+    height: 1px;
+    width: 100%;
+    background-color: rgb(179, 176, 176);
+    border-radius: 2px;
+    align-self: flex-end;
+}
+.left ul li{
+    list-style-type: disc;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 20px;
+}
+.profile .right{
+    width: 100%;
+}
+.right .name{
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+.right .container_title{
+    margin-bottom: 10px;
+}
+.right .job_description{
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(11, 153, 209, 0.987);
+    margin-bottom: 20px;
+}
+.align-center{
+    display: flex;
+    align-items: center;
+}
+.rating{
+    font-size: 12px;
+    width: 120px;
+    font-weight: 700;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.row_container{
+    margin-right: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+.message{
+    font-size: 10px;
+    font-weight: 700;
+}
+.contacts{
+    font-size: 10px;
+    font-weight: 700;
+}
+.right .icon{
+    margin-right: 5px;
+}
+.selector{
+    margin-bottom: 20px;
+}
+.row .active{
+    color:rgba(11, 153, 209, 0.987) ;
+    background-color: rgba(229, 247, 255, 0.987);
+    font-weight: 700;
+}
+.report{
+    font-size: 12px;
+    color: gray;
+    font-weight: 500;
+}
+
+.bottom_container .row_container{
+    padding: 0;
+}
+.bottom_container .row .active{
+    color: black;
+    background: none;
+    font-size: 12px;
+    text-transform: capitalize;
+    position: relative;
+}
+.bottom_container .row .active::after{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    background-color:rgba(11, 153, 209, 0.987) ;
+    height: 2px;
+    width: 100%;
+
+}
+.bottom_container .underline{
+    content: '';
+    height: 1px;
+    width: 100%;
+    background-color: rgb(179, 176, 176);
+    border-radius: 2px;
+    align-self: flex-end;
+}
+ .bottom_container .contact_info{
+    font-size: 10px;
+    margin: 10px 0;
+}
+.bottom_container .contact_info_title{
+    font-size: 14px;
+    /* margin-right: 20px; */
+    width: 70px;
+}
+.bottom_container .contact_info_details{
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+.message_active{
+    background-color: rgba(11, 153, 209, 0.987);
+}
+
+@media(min-width:574px){
+    .profile{
+        width:70%;
+    }
+    /* .bottom{
+        margin: 0 40px 40px 40px;
+    } */
+    .profile .left{
+        width: 20%;
+        display: flex;
+        flex-direction:column;
+        margin-right: 60px;
+    }
+    .left .profile_pic{
+        width:100%;
+        align-self:flex-end;
+    }
+    .left .container_header{
+        display: flex;
+        margin:20px 0
+
+    }
+     .container_title{
+        color:gray;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+    .left .work_place{
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .left .work_address{
+        font-size: 12px;
+        color: gray;
+        font-weight: 500;
+        text-transform: capitalize;
+    }
+     .left .underline{
+        content: '';
+        height: 1px;
+        width: 100%;
+        background-color: rgb(179, 176, 176);
+        border-radius: 2px;
+        align-self: flex-end;
+    }
+    .left ul li{
+        list-style-type: disc;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 20px;
+    }
+    .profile .right{
+        width: 100%;
+    }
+    .right .name{
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: capitalize;
+    }
+    .right .container_title{
+        margin-bottom: 10px;
+    }
+    .right .job_description{
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 5px;
+        margin-bottom: 30px;
+    }
+    .align-center{
+        display: flex;
+        align-items: center;
+    }
+    .rating{
+        width: 120px;
+        font-weight: 700;
+        /* justify-content: space-between; */
+        margin-bottom: 30px;
+    }
+
+    .row_container{
+        margin-right: 10px;
+        padding: 10px;
+    }
+    .message{
+        font-size: 14px;
+    }
+    .contacts{
+        font-size: 14px;
+    }
+    .right .icon{
+        margin-right: 5px;
+    }
+    .selector{
+        margin-bottom: 30px;
+    }
+    .report{
+        font-size: 12px;
+        font-weight: 500;
+    }
+   
+    .bottom_container .row .active{
+        font-size: 14px;
+        text-transform: capitalize;
+        position: relative;
+    }
+     .bottom_container .contact_info{
+        font-size: 10px;
+        margin: 20px 0;
+    }
+    .bottom_container .contact_info_title{
+        font-size: 16px;
+        width: 100px;
+    }
+    .bottom_container .contact_info_details{
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .hidden{
+        display: block;
+    }
+}

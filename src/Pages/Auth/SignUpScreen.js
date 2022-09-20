@@ -1,0 +1,357 @@
+import { Field, Formik, ErrorMessage, useFormikContext } from "formik";
+import React, { useState, useEffect } from "react";
+import { FaApple, FaArrowRight, FaFacebookF, FaGoogle } from "react-icons/fa";
+import { Navigate, useNavigate } from "react-router-dom";
+import firebase from "../../Firebase/firebase";
+import { useFilePicker } from "use-file-picker";
+import * as Yup from "yup";
+import "../../css/loginpage.css";
+import { useAuth } from "../../components/Auth/use-auth";
+import { getAuth, updateProfile } from "firebase/auth";
+
+export default function SignUpScreen() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [accountType, setAccountType] = useState(false);
+  const [count, setCount] = useState(false);
+  const [imageUri, setImageuri] = useState("");
+  const { setProfile, signup } = useAuth();
+  const fAuth = getAuth();
+  useEffect(() => {
+    document.querySelector(".profile_pic").addEventListener("click", () => {
+      openFileSelector();
+    });
+  }, []);
+  const [openFileSelector, { filesContent = "", loading, errors }] =
+    useFilePicker({
+      readAs: "DataURL",
+      accept: "image/*",
+      multiple: false,
+      limitFilesConfig: { max: 2 },
+      // minFileSize: 1,
+      maxFileSize: 2, // in megabytes
+      // imageSizeRestrictions: {
+      //   maxHeight: 2400, // in pixels
+      //   maxWidth: 2400,
+      //   minHeight: 600,
+      //   minWidth: 768,
+      // },
+    });
+  useEffect(() => {
+    filesContent.map((file, index) => {
+      setImageuri(file.content);
+    });
+  }, [filesContent]);
+
+  let data = [];
+  if (errors.length) {
+    setTimeout(() => {
+      alert(errors.values);
+    }, 1000);
+  }
+
+  const facebookBackground =
+    "linear-gradient(to right,#0546A0 0%, #663FB6 100%)";
+  const validationSchema1 = Yup.object().shape({
+    email: Yup.string().email().required(),
+    password: Yup.string()
+      .label("password")
+      .required()
+      .min(8)
+      .matches(
+        /^.*((?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1})).*$/,
+        "Password must contain lower case and upper case"
+      ),
+    confirmPassword: Yup.string()
+      .label("password")
+      .required()
+      .oneOf([Yup.ref("password"), null], "Passwords don't match."),
+  });
+  const validationSchema2 = Yup.object().shape({
+    fname: Yup.string().required(),
+    lname: Yup.string().required(),
+    phone: Yup.string()
+      .required()
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(11, "phone is invalid")
+      .max(11, "phone is invalid"),
+    nin: Yup.string()
+      .required()
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(11, "NIN is invalid")
+      .max(11, "NIN is invalid"),
+  });
+
+  return (
+    <div className="form-container">
+      <div className="login-title">Sign-Up!</div>
+      <div className={isLoading && "loader-container"} />
+      <Formik
+        validationSchema={validationSchema1}
+        initialValues={{
+          email: "",
+          phone: "",
+          accountType: "parent",
+          password: "",
+          confirmPassword: "",
+        }}
+        onSubmit={(values) => {
+          setAccountType(values.accountType);
+          signup(values.email, values.password, setCount, setIsLoading);
+        }}
+      >
+        {({ handleSubmit, isSubmitting }) => (
+          <form
+            className="loginForm"
+            onSubmit={handleSubmit}
+            style={{ display: count && "none" }}
+          >
+            <label className="label">Email:</label>
+            <Field
+              type={"email"}
+              placeholder={"Please input Email"}
+              id="email"
+              name="email"
+            />
+            <ErrorMessage
+              component="div"
+              name="email"
+              className="invalid-feedback"
+            />
+            <label className="label">Account:</label>
+
+            <Field as="select" name="accountType">
+              <option value="Parent">Parent</option>
+              <option value="Student">Student</option>
+              <option value="Teacher">Teacher</option>
+            </Field>
+            <ErrorMessage
+              component="div"
+              name="accountType"
+              className="invalid-feedback"
+            />
+            <label className="label">Password:</label>
+
+            <Field
+              type={"password"}
+              placeholder={"Please input Password"}
+              id={"password"}
+              name={"password"}
+            />
+            <ErrorMessage
+              component="div"
+              name="password"
+              className="invalid-feedback"
+            />
+            <label className="label">Confirm Password:</label>
+
+            <Field
+              type={"password"}
+              placeholder={"Please Confirm Password"}
+              id={"confirmPassword"}
+              name={"confirmPassword"}
+            />
+            <ErrorMessage
+              component="div"
+              name="confirmPassword"
+              className="invalid-feedback"
+            />
+
+            <button
+              type="submit"
+              style={{
+                display: "flex",
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+              }}
+              className="login-button"
+              disabled={isSubmitting}
+            >
+              <p>Next</p>
+              <FaArrowRight style={{ position: "absolute", right: 20 }} />
+            </button>
+          </form>
+        )}
+      </Formik>
+      <Formik
+        validationSchema={validationSchema2}
+        initialValues={{
+          fname: "",
+          lname: "",
+          mname: "",
+          phone: "",
+          nin: "",
+          imageuri: imageUri,
+        }}
+        onSubmit={(values) => {
+          setIsLoading(true);
+          const data = {
+            name: {
+              fname: values.fname,
+              lname: values.lname,
+              mname: values.mname,
+            },
+            uri: imageUri,
+            nin: values.nin,
+            phone: values.phone,
+            accountType: accountType,
+          };
+          updateProfile(fAuth.currentUser, {
+            displayName: values.fname + "" + values.mname + "" + values.lname,
+          })
+            .then(() => {
+              setProfile(data, setIsLoading);
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              console.log(err);
+            });
+        }}
+      >
+        {({ handleSubmit, isSubmitting }) => (
+          <form
+            className="loginForm"
+            onSubmit={(e) => {
+              e.preventDefault();
+              !imageUri ? alert("select Image") : handleSubmit();
+            }}
+            style={{ display: !count && "none" }}
+          >
+            <div className="row">
+              <div className="profile_pic">
+                {filesContent.map((file, index) => (
+                  <div key={index}>
+                    <img
+                      alt={file.name}
+                      src={file.content}
+                      className="profile_pic"
+                    ></img>
+                    <br />
+                  </div>
+                ))}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  flexGrow: 1,
+                  marginLeft: 10,
+                }}
+              >
+                <label className="label">First Name:</label>
+                <Field
+                  type={"text"}
+                  placeholder={"Please input First Name"}
+                  id="fname"
+                  name="fname"
+                />
+                <ErrorMessage
+                  component="div"
+                  name="fname"
+                  className="invalid-feedback"
+                />
+
+                <label className="label">Last Name:</label>
+                <Field
+                  type={"text"}
+                  placeholder={"Please input Last Name"}
+                  id="lname"
+                  name="lname"
+                />
+                <ErrorMessage
+                  component="div"
+                  name="lname"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <label className="label">Middle Name:</label>
+            <Field
+              type={"text"}
+              placeholder={"optional"}
+              id="mname"
+              name="mname"
+            />
+            <ErrorMessage
+              component="div"
+              name="mname"
+              className="invalid-feedback"
+            />
+
+            <label className="label">NIN:</label>
+
+            <Field
+              type={"number"}
+              inputMode={"numeric"}
+              placeholder={"Please input NIN"}
+              id={"nin"}
+              name={"nin"}
+            />
+            <ErrorMessage
+              component="div"
+              name="nin"
+              className="invalid-feedback"
+            />
+            <label className="label">Phone:</label>
+
+            <Field
+              type={"number"}
+              inputMode={"numeric"}
+              placeholder={"Please Enter Phone number"}
+              id={"phone"}
+              name={"phone"}
+            />
+            <ErrorMessage
+              component="div"
+              name="phone"
+              className="invalid-feedback"
+            />
+
+            <button
+              type="submit"
+              style={{
+                display: "flex",
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+              }}
+              className="login-button"
+              disabled={isSubmitting}
+            >
+              <p>Next</p>
+              <FaArrowRight style={{ position: "absolute", right: 20 }} />
+            </button>
+          </form>
+        )}
+      </Formik>
+      <a href={"./login"} className="sign-up">
+        Already have an Account? Login
+      </a>
+      <p className="alternative-sign-in">or SignUp with</p>
+      <div className="horizontalrule" />
+      <div className="bottom">
+        <div className="social-links">
+          <a href="" style={{ background: facebookBackground }}>
+            <FaFacebookF color="white" />
+          </a>
+          <a href="" style={{ background: "white" }}>
+            <FaGoogle style={{ fill: "url(#blue-gradient)" }} />
+          </a>
+          <a href="" style={{ background: "black" }}>
+            <FaApple color="white" />
+          </a>
+        </div>
+      </div>
+      <svg width="0" height="0">
+        <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop stopColor="#4285F4" offset="0%" />
+          <stop stopColor="#34A853" offset="33%" />
+          <stop stopColor="#FBBC05" offset="67%" />
+          <stop stopColor="#EA4335" offset="100%" />
+        </linearGradient>
+      </svg>
+    </div>
+  );
+}

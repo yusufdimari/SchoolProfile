@@ -1,0 +1,28 @@
+.messages_list{
+    width: 100%;
+    overflow: scroll;
+    scroll-behavior: initial;
+    /* display: none; */
+}
+.message_preview{
+    width: 100%;
+    /* display: none; */
+}
+.message_preview_content{
+    background-color: rgba(11, 153, 209, 0.987);
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+@media(min-width:1023px){
+    .message_preview{
+        display: block;
+        width: 70%;
+    }
+    .messages_list{
+        width: 40%;
+        overflow: scroll;
+        scroll-behavior: initial;
+        /* display: none; */
+    }
+    
+}

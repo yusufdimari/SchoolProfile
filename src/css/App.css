@@ -1,0 +1,135 @@
+body {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+.black{
+  color: black;
+}
+.white{
+  color:white
+}
+.gray{
+  color: gray;
+}
+.uppercase{
+  text-transform: uppercase;
+}
+.space-between{
+  justify-content: space-between;
+}
+.bold{
+  font-weight: bold;
+}
+.light-bold{
+  font-weight: 700;
+}
+.blue{
+  color:rgba(11, 153, 209, 0.987) ;
+}
+.row{
+  display: flex;
+}
+.center{
+  align-items: center;
+}
+.flex{
+  display: flex;
+}
+.icon{
+  margin-right: 10px;
+}
+.hidden{
+  display: none;
+}
+.block{
+  display: block;
+}
+
+footer{
+  margin-top: auto;
+}
+
+/* .titleBar{
+  width: 100%;
+  background-color: #fff;
+  color: black;
+  position: fixed;
+}
+/* .boxes{
+  position: relative;
+  width: 100vw;
+  border: 3px solid yellow;
+}
+.box{
+  max-width: 500px;
+  width: 200px;
+  height: 200px;
+  background-color: #fff;
+  margin: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid teal;
+}
+.box-1{
+  width: auto;
+  background-color: aqua;
+  position: fixed;
+  top: 0;
+  left: 1rem;
+  right: 1rem;
+}
+.box-2{
+  background-color: red;
+}
+.box-3{
+  background-color:burlywood ;
+}
+.boxTitle{
+  background-color: aquamarine;
+  height: 10%;
+  color: #000;
+  text-align: center;
+  font-size: large;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+p {
+  margin: 0;
+} */
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+} */
+
+/* .App-logo {
+  height: 40vmin;
+  pointer-events: none;
+} */
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
