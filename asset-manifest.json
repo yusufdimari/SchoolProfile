@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/SchoolProfile/static/css/main.73100c2b.css",
-    "main.js": "/SchoolProfile/static/js/main.c57c9a7a.js",
+    "main.css": "/SchoolProfile/static/css/main.2c31395e.css",
+    "main.js": "/SchoolProfile/static/js/main.5a9d1ebd.js",
     "static/js/787.54d828dc.chunk.js": "/SchoolProfile/static/js/787.54d828dc.chunk.js",
     "static/media/5.jpg": "/SchoolProfile/static/media/5.c51f04f09a2f743bc70b.jpg",
     "static/media/3.jpg": "/SchoolProfile/static/media/3.7c201778f46d7d47e834.jpg",
@@ -16,12 +16,12 @@
     "static/media/slick.ttf": "/SchoolProfile/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/SchoolProfile/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/SchoolProfile/index.html",
-    "main.73100c2b.css.map": "/SchoolProfile/static/css/main.73100c2b.css.map",
-    "main.c57c9a7a.js.map": "/SchoolProfile/static/js/main.c57c9a7a.js.map",
+    "main.2c31395e.css.map": "/SchoolProfile/static/css/main.2c31395e.css.map",
+    "main.5a9d1ebd.js.map": "/SchoolProfile/static/js/main.5a9d1ebd.js.map",
     "787.54d828dc.chunk.js.map": "/SchoolProfile/static/js/787.54d828dc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.73100c2b.css",
-    "static/js/main.c57c9a7a.js"
+    "static/css/main.2c31395e.css",
+    "static/js/main.5a9d1ebd.js"
   ]
 }
