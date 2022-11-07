@@ -46,7 +46,7 @@ export default function Profile({ active, data }) {
         <p className="name">
           {data.name.fname + " " + data.name.mname + " " + data.name.lname}
         </p>
-        <p className="job_description">School Teacher</p>
+        <p className="job_description">{data.accountType}</p>
         <p className="container_title">Ratings</p>
         <p className="rating align-center">
           <span style={{ marginRight: 10 }}>4.5</span>{" "}

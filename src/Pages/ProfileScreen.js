@@ -7,6 +7,9 @@ import Profile from "../components/Profile";
 import firebase from "../Firebase/firebase";
 import { useAuth } from "../components/Auth/use-auth";
 import Users from "../components/Users";
+import Lottie from "lottie-web";
+import loadingAnimation from "../static/loadingAnimation.json";
+import Loading from "../components/Loading";
 
 export default function ProfileScreen() {
   const [activeMessage, setActiveMessage] = useState(null);
@@ -92,6 +95,10 @@ export default function ProfileScreen() {
   const [data, setData] = useState(null);
   const { getProfile } = useAuth();
   useEffect(() => {
+    Lottie.loadAnimation({
+      container: document.querySelector(".loader"),
+      animationData: loadingAnimation,
+    });
     getProfile(setData);
     const messages = document.querySelectorAll(".message");
     messages.forEach((message) => {
@@ -105,7 +112,7 @@ export default function ProfileScreen() {
   }, []);
 
   if (!data) {
-    return <div className={"loader-container"} />;
+    return <Loading />;
   }
   return (
     <div className="container profile">

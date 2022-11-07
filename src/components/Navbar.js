@@ -19,7 +19,10 @@ export default function Navbar() {
       });
     });
     const logout = document.querySelector(".logout");
-    logout.addEventListener("click", () => auth.signout());
+    logout.addEventListener("click", () => {
+      auth.signout();
+      links.forEach((link) => link.classList.remove("nav_link_active"));
+    });
   }, []);
 
   const navToggle = (id) => {
@@ -50,7 +53,7 @@ export default function Navbar() {
             <Link
               to="./SchoolProfile/profile"
               className={"nav_link"}
-              onClick={() => navToggle("profile")}
+              onClick={navToggle}
             >
               Profile
             </Link>

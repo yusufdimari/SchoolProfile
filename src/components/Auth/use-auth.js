@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import firebase from "../../Firebase/firebase";
+import { getAuth, updateProfile } from "firebase/auth";
 const authContext = createContext();
+const fAuth = getAuth();
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
@@ -40,21 +42,24 @@ function useProvideAuth() {
     });
     return response.user;
   };
-  const signup = async (email, password, setCount, setIsLoading) => {
+  const signup = async (values, data, setIsLoading) => {
     setIsLoading(true);
     const response = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(values.email, values.password)
       .then(() => {
-        firebase
-          .auth()
-          .signInWithEmailAndPassword(email, password)
-          .then((response) => {
-            setCount(true);
-            setUser(response.user);
-            console.log(user);
-            setIsLoading(false);
-          });
+        signin(values.email, values.password, setIsLoading).then(() => {
+          updateProfile(fAuth.currentUser, {
+            displayName: values.fname + "" + values.mname + "" + values.lname,
+          })
+            .then(() => {
+              setProfile(data, setIsLoading);
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              console.log(err, "update profile error");
+            });
+        });
       })
       .catch((err) => {
         setIsLoading(false);
@@ -94,14 +99,14 @@ function useProvideAuth() {
     firebase
       .firestore()
       .collection("users")
-      .doc(user.uid)
+      .doc(fAuth.currentUser.uid)
       .set(data)
       .then(() => {
         navigate("../SchoolProfile/");
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "set profile error");
         setIsLoading(false);
       });
   };

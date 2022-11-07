@@ -2,10 +2,12 @@ import { Field, Formik, ErrorMessage, useFormikContext } from "formik";
 import React, { useState, useEffect } from "react";
 import { FaApple, FaArrowRight, FaFacebookF, FaGoogle } from "react-icons/fa";
 import { Navigate, useNavigate } from "react-router-dom";
+import firebase from "../../Firebase/firebase";
 import { useFilePicker } from "use-file-picker";
 import * as Yup from "yup";
 import "../../css/loginpage.css";
 import { useAuth } from "../../components/Auth/use-auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import Loading from "../../components/Loading";
 import Lottie from "lottie-web";
 import loadingAnimation from "../../static/loadingAnimation.json";
@@ -13,18 +15,17 @@ import loadingAnimation from "../../static/loadingAnimation.json";
 export default function SignUpScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [accountType, setAccountType] = useState(false);
+  const [count, setCount] = useState(false);
   const [imageUri, setImageuri] = useState("");
   const { setProfile, signup } = useAuth();
-  useEffect(() => {
-    Lottie.loadAnimation({
-      container: document.querySelector(".loader"),
-      animationData: loadingAnimation,
-    });
-  }, [isLoading]);
-
+  const fAuth = getAuth();
   useEffect(() => {
     document.querySelector(".profile_pic").addEventListener("click", () => {
       openFileSelector();
+      Lottie.loadAnimation({
+        container: document.querySelector(".loader"),
+        animationData: loadingAnimation,
+      });
     });
   }, []);
   const [openFileSelector, { filesContent = "", loading, errors }] =
@@ -71,7 +72,8 @@ export default function SignUpScreen() {
       .label("password")
       .required()
       .oneOf([Yup.ref("password"), null], "Passwords don't match."),
-
+  });
+  const validationSchema2 = Yup.object().shape({
     fname: Yup.string().required(),
     lname: Yup.string().required(),
     phone: Yup.string()
@@ -89,6 +91,7 @@ export default function SignUpScreen() {
   return (
     <div className="form-container">
       <div className="login-title">Sign-Up!</div>
+      <div className={isLoading && "loader-container"} />
       {isLoading && <Loading />}
       <Formik
         validationSchema={validationSchema1}
@@ -106,8 +109,97 @@ export default function SignUpScreen() {
           imageuri: imageUri,
         }}
         onSubmit={(values) => {
-          setIsLoading(true);
           setAccountType(values.accountType);
+          signup(values.email, values.password, setCount, setIsLoading);
+        }}
+      >
+        {({ handleSubmit, isSubmitting }) => (
+          <form
+            className="loginForm"
+            onSubmit={handleSubmit}
+            style={{ display: count && "none" }}
+          >
+            <label className="label">Email:</label>
+            <Field
+              type={"email"}
+              placeholder={"Please input Email"}
+              id="email"
+              name="email"
+            />
+            <ErrorMessage
+              component="div"
+              name="email"
+              className="invalid-feedback"
+            />
+            <label className="label">Account:</label>
+
+            <Field as="select" name="accountType">
+              <option value="Parent">Parent</option>
+              <option value="Student">Student</option>
+              <option value="Teacher">Teacher</option>
+            </Field>
+            <ErrorMessage
+              component="div"
+              name="accountType"
+              className="invalid-feedback"
+            />
+            <label className="label">Password:</label>
+
+            <Field
+              type={"password"}
+              placeholder={"Please input Password"}
+              id={"password"}
+              name={"password"}
+            />
+            <ErrorMessage
+              component="div"
+              name="password"
+              className="invalid-feedback"
+            />
+            <label className="label">Confirm Password:</label>
+
+            <Field
+              type={"password"}
+              placeholder={"Please Confirm Password"}
+              id={"confirmPassword"}
+              name={"confirmPassword"}
+            />
+            <ErrorMessage
+              component="div"
+              name="confirmPassword"
+              className="invalid-feedback"
+            />
+
+            <button
+              type="submit"
+              style={{
+                display: "flex",
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+              }}
+              className="login-button"
+              disabled={isSubmitting}
+            >
+              <p>Next</p>
+              <FaArrowRight style={{ position: "absolute", right: 20 }} />
+            </button>
+          </form>
+        )}
+      </Formik>
+      <Formik
+        validationSchema={validationSchema2}
+        initialValues={{
+          fname: "",
+          lname: "",
+          mname: "",
+          phone: "",
+          nin: "",
+          imageuri: imageUri,
+        }}
+        onSubmit={(values) => {
+          setIsLoading(true);
           const data = {
             name: {
               fname: values.fname,
@@ -119,7 +211,16 @@ export default function SignUpScreen() {
             phone: values.phone,
             accountType: accountType,
           };
-          signup(values, data, setIsLoading);
+          updateProfile(fAuth.currentUser, {
+            displayName: values.fname + "" + values.mname + "" + values.lname,
+          })
+            .then(() => {
+              setProfile(data, setIsLoading);
+            })
+            .catch((err) => {
+              setIsLoading(false);
+              console.log(err);
+            });
         }}
       >
         {({ handleSubmit, isSubmitting }) => (
@@ -129,6 +230,7 @@ export default function SignUpScreen() {
               e.preventDefault();
               !imageUri ? alert("select Image") : handleSubmit();
             }}
+            style={{ display: !count && "none" }}
           >
             <div className="row">
               <div className="profile_pic">
@@ -190,56 +292,6 @@ export default function SignUpScreen() {
               name="mname"
               className="invalid-feedback"
             />
-            <label className="label">Email:</label>
-            <Field
-              type={"email"}
-              placeholder={"Please input Email"}
-              id="email"
-              name="email"
-            />
-            <ErrorMessage
-              component="div"
-              name="email"
-              className="invalid-feedback"
-            />
-            <label className="label">Account:</label>
-
-            <Field as="select" name="accountType">
-              <option value="Parent">Parent</option>
-              <option value="Student">Student</option>
-              <option value="Teacher">Teacher</option>
-            </Field>
-            <ErrorMessage
-              component="div"
-              name="accountType"
-              className="invalid-feedback"
-            />
-            <label className="label">Password:</label>
-
-            <Field
-              type={"password"}
-              placeholder={"Please input Password"}
-              id={"password"}
-              name={"password"}
-            />
-            <ErrorMessage
-              component="div"
-              name="password"
-              className="invalid-feedback"
-            />
-            <label className="label">Confirm Password:</label>
-
-            <Field
-              type={"password"}
-              placeholder={"Please Confirm Password"}
-              id={"confirmPassword"}
-              name={"confirmPassword"}
-            />
-            <ErrorMessage
-              component="div"
-              name="confirmPassword"
-              className="invalid-feedback"
-            />
 
             <label className="label">NIN:</label>
 
@@ -280,8 +332,9 @@ export default function SignUpScreen() {
                 position: "relative",
               }}
               className="login-button"
+              disabled={isSubmitting}
             >
-              <p>Register</p>
+              <p>Next</p>
               <FaArrowRight style={{ position: "absolute", right: 20 }} />
             </button>
           </form>

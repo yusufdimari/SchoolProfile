@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Field, Formik, ErrorMessage } from "formik";
 import { FaApple, FaFacebookF, FaGoogle } from "react-icons/fa";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import * as Yup from "yup";
 import "../../css/loginpage.css";
 import { useAuth } from "../../components/Auth/use-auth";
+import Loading from "../../components/Loading";
+import Lottie from "lottie-web";
+import loadingAnimation from "../../static/loadingAnimation.json";
 
 export default function LoginPage() {
   const [loading, setIsLoading] = useState(false);
@@ -12,6 +15,15 @@ export default function LoginPage() {
   const location = useLocation();
   const auth = useAuth();
   const prevPage = location.state;
+  useEffect(() => {
+    Lottie.loadAnimation({
+      container: document.querySelector(".loader"),
+      animationData: loadingAnimation,
+      loop: true,
+      autoplay: true,
+    });
+  }, [loading]);
+
   const facebookBackground =
     "linear-gradient(to right,#0546A0 0%, #663FB6 100%)";
 
@@ -27,13 +39,13 @@ export default function LoginPage() {
   return (
     <div className="form-container">
       <div className="login-title">Welcome!</div>
-      <div className={loading && "loader-container"} />
+      {loading && <Loading />}
       <Formik
         validationSchema={validationSchema}
         initialValues={{ email: "", password: "" }}
         onSubmit={(values) => handleSubmit(values)}
       >
-        {({ handleSubmit, isSubmitting }) => (
+        {({ handleSubmit }) => (
           <form className="loginForm" onSubmit={handleSubmit}>
             <label className="label">Email:</label>
 
@@ -61,11 +73,7 @@ export default function LoginPage() {
               name="password"
               className="invalid-feedback"
             />
-            <button
-              type="submit"
-              className="login-button"
-              disabled={isSubmitting}
-            >
+            <button type="submit" className="login-button">
               Login
             </button>
             <Link to={"../SchoolProfile/signup"} className="sign-up">
@@ -89,14 +97,14 @@ export default function LoginPage() {
           </form>
         )}
       </Formik>
-      <svg width="0" height="0">
+      {/* <svg width="0" height="0">
         <linearGradient id="blue-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
           <stop stopColor="#4285F4" offset="0%" />
           <stop stopColor="#34A853" offset="33%" />
           <stop stopColor="#FBBC05" offset="67%" />
           <stop stopColor="#EA4335" offset="100%" />
         </linearGradient>
-      </svg>
+      </svg> */}
     </div>
   );
 }
